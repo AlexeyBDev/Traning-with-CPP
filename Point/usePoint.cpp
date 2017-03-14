@@ -58,6 +58,8 @@ int main(int argc, char* argv[])
 	f = e;
 	f.Print();
 
+	f = f;
+
 	return 0;
 }
 
