@@ -1,7 +1,7 @@
 //#ifdef _DEBUG
 //#endif //_DEBUG
 #if defined(_DEBUG)
-	#define SPC_POINT_DEBUG 1
+	#define SPC_POINT_DEBUG 0
 #else
 	#define SPC_POINT_DEBUG 0
 #endif
