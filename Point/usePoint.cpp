@@ -57,8 +57,32 @@ int main(int argc, char* argv[])
 	SpcPoint f;
 	f = e;
 	f.Print();
+	SpcPoint g;
+	g = f + d;
+	g.Print();
+	cout << endl;
+	g = f - d;
+	g.Print();
+	cout << endl;
 
 	f = f;
+	f = f * 3.4f;
+	f.Print();
+	f = f / 12.434f;
+	for (int i = 0; i < 10; ++i)
+	{
+		f.Print(i);
+		cout << endl;
+	}
+	SpcPoint h;
+	h = f / 0;
+	h.Print(); cout << endl;
+	f.SetZ(10);
+	cout << "f = "; f.Print(); cout << endl;
+	cout << "g = "; g.Print(); cout << endl;
+	cout << "dist _2D = " << dist(f, g) << endl;
+	cout << "dist _2D = " << dist(f, g, SpcPoint::_2D) << endl;
+	cout << "dist _3D = " << dist(f, g, SpcPoint::_3D) << endl;
 
 	return 0;
 }

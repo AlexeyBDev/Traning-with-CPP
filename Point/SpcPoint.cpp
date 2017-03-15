@@ -1,7 +1,7 @@
 //#ifdef _DEBUG
 //#endif //_DEBUG
 #if defined(_DEBUG)
-	#define SPC_POINT_DEBUG 0
+	#define SPC_POINT_DEBUG 1
 #else
 	#define SPC_POINT_DEBUG 0
 #endif
@@ -12,6 +12,7 @@ using std::cout;
 using std::endl;
 
 #include <iomanip>
+#include <cmath>
 
 #include "SpcPoint.h"
 
@@ -66,25 +67,38 @@ SpcPoint::~SpcPoint()
 #endif
 }
 
-void SpcPoint::Print(const int axis,const int precision)
+void SpcPoint::Print(const int precision)
+{
+	cout << std::setprecision(precision)
+		<< std::setiosflags(std::ios::showpoint | std::ios::fixed);
+	cout << "(" << x_ << ", " << y_ << ", " << z_ << ")";
+}
+
+void SpcPoint::Print(const SpcPoint::axis axis, const int precision)
 {
 	cout << std::setprecision(precision)
 		<< std::setiosflags(std::ios::showpoint | std::ios::fixed);
 	switch (axis)
 	{
-	case X: cout << "(" << x_ << ")"; break;
-	case Y: cout << "(" << y_ << ")"; break;
-	case Z: cout << "(" << z_ << ")"; break;
-	case XY: cout << "(" << x_ << ", " << y_ << ")"; break;
-	case YZ: cout << "(" << y_ << ", " << z_ << ")"; break;
-	case XZ: cout << "(" << x_ << ", " << z_ << ")"; break;
-	case XYZ: cout << "(" << x_ << ", " << y_ << ", " << z_ << ")"; break;
+	case SpcPoint::X: cout << "(" << x_ << ")"; break;
+	case SpcPoint::Y: cout << "(" << y_ << ")"; break;
+	case SpcPoint::Z: cout << "(" << z_ << ")"; break;
+	case SpcPoint::XY: cout << "(" << x_ << ", " << y_ << ")"; break;
+	case SpcPoint::YZ: cout << "(" << y_ << ", " << z_ << ")"; break;
+	case SpcPoint::XZ: cout << "(" << x_ << ", " << z_ << ")"; break;
+	case SpcPoint::XYZ: cout << "(" << x_ << ", " << y_ << ", " << z_ << ")"; break;
 	default: cout << "(" << x_ << ", " << y_ << ", " << z_ << ")"; break;
 	}
 }
 
 SpcPoint& SpcPoint::operator =(const SpcPoint& other)
 {
+	if (this == &other) {
+#if SPC_POINT_DEBUG
+		cout << this << " == " << &other << endl;
+#endif
+	return *this;
+	}
 	x_ = other.x_;
 	y_ = other.y_;
 	z_ = other.z_;
@@ -96,4 +110,74 @@ SpcPoint& SpcPoint::operator =(const SpcPoint& other)
 	return *this;
 }
 
+SpcPoint & SpcPoint::operator+(const SpcPoint & other)
+{
+	// TODO: insert return statement here
+	x_ += other.x_;
+	y_ += other.y_;
+	z_ += other.z_;
 
+#if SPC_POINT_DEBUG
+	cout << "SpcPoint & SpcPoint::operator+(const SpcPoint & other)" << endl;
+#endif
+
+	return *this;
+}
+
+SpcPoint & SpcPoint::operator-(const SpcPoint & other)
+{
+	// TODO: insert return statement here
+	x_ -= other.x_;
+	y_ -= other.y_;
+	z_ -= other.z_;
+
+#if SPC_POINT_DEBUG
+	cout << "SpcPoint & SpcPoint::operator-(const SpcPoint & other)" << endl;
+#endif
+
+	return *this;
+}
+
+SpcPoint & SpcPoint::operator*(const float & scalar)
+{
+	// TODO: insert return statement here
+	x_ *= scalar;
+	y_ *= scalar;
+	z_ *= scalar;
+
+#if SPC_POINT_DEBUG
+	cout << "SpcPoint & SpcPoint::operator*(const float & scalar)" << endl;
+#endif
+
+	return *this;
+}
+
+SpcPoint & SpcPoint::operator/(const float & scalar)
+{
+	// TODO: insert return statement here
+	if (scalar == 0.0f) return *this;
+	x_ /= scalar;
+	y_ /= scalar;
+	z_ /= scalar;
+
+#if SPC_POINT_DEBUG
+	cout << "SpcPoint & SpcPoint::operator/(const float & scalar)" << endl;
+#endif
+
+	return *this;
+}
+
+float dist(const SpcPoint & t1, const SpcPoint & t2, SpcPoint::dim dim)
+{
+	float dx, dy, dz;
+	dx = t1.x_ - t2.x_;
+	dy = t1.y_ - t2.y_;
+	dz = t1.z_ - t2.z_;
+	switch (dim) 
+	{
+	case SpcPoint::_2D: return sqrt(dx * dx + dy * dy);
+	case SpcPoint::_3D: return sqrt(dx * dx + dy * dy + dz * dz);
+	default: return sqrt(dx * dx + dy * dy);
+	}
+	return 0.0f;
+}

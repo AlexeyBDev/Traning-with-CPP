@@ -12,6 +12,8 @@ private:
 public:
 	// квалификаторы доступа
 	enum axis { X, Y, Z, XY, YZ, XZ, XYZ };
+	// квалификаторы измерений
+	enum dim {_2D = 2, _3D};
 	// inline методы
 	// возврат соответствующей координаты
 	float GetX();
@@ -31,8 +33,16 @@ public:
 	SpcPoint(const SpcPoint &p);
 	~SpcPoint();
 
-	void Print(const int axis = XYZ,const int precision = 2);
+	void Print(const int precision);
+	void Print(const SpcPoint::axis axis = SpcPoint::XYZ, const int precision = 2); 
 	SpcPoint &operator =(const SpcPoint &other);
+	SpcPoint &operator +(const SpcPoint &other);
+	SpcPoint &operator -(const SpcPoint &other);
+	//explicit 
+	SpcPoint &operator *(const float &scalar);
+	SpcPoint &operator /(const float &scalar); 
+
+	friend float dist(const SpcPoint &t1, const SpcPoint &t2, SpcPoint::dim dim = SpcPoint::_2D);
 };
 
 inline float SpcPoint::GetX() {
