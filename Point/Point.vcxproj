@@ -142,11 +142,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GL_Point3D.cpp" />
     <ClCompile Include="Point2D.cpp" />
     <ClCompile Include="Point3D.cpp" />
     <ClCompile Include="usePoint.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GL_Point3D.h" />
     <ClInclude Include="Point2D.h" />
     <ClInclude Include="Point3D.h" />
   </ItemGroup>
